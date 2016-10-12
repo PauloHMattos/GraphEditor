@@ -277,20 +277,28 @@ namespace Klak.Wiring.Patcher
             }
         }
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            GUIScaleUtility.CheckInit();
+        }
+
         private Vector2 _scrollPosition;
         void DrawMainViewGUI()
         {
-            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+            //_scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, true, true);
 
             EditorGUILayout.BeginHorizontal(GUIStyles.background);
             GUILayout.FlexibleSpace();
 
-            EditorGUILayout.BeginVertical();
+            var canvasRect = EditorGUILayout.BeginVertical();
+            //canvasRect.height -= 100;
+
             GUILayout.FlexibleSpace();
-
-
+            
             var pivot = new Vector2(Screen.width / 2f, (Screen.height / 2f) + 50);
-            GUIUtility.ScaleAroundPivot(new Vector2(_zoom, _zoom), pivot);
+
+            //GUIUtility.ScaleAroundPivot(new Vector2(_zoom, _zoom), pivot);
             
             if (Event.current.button == 2 && Event.current.type == EventType.MouseDrag ||
                 Event.current.button == 0 && Event.current.type == EventType.MouseDrag && Event.current.modifiers == EventModifiers.Alt)
@@ -305,6 +313,17 @@ namespace Klak.Wiring.Patcher
                 Event.current.Use();
             }
 
+            //_scrollPosition.y = Mathf.Max(_scrollPosition.y, _mainViewMax.y);
+            //_scrollPosition.x = Mathf.Max(_scrollPosition.x, _mainViewMax.x);
+
+            //_scrollPosition.y = Mathf.Min(_scrollPosition.y, 0);
+            //_scrollPosition.x = Mathf.Min(_scrollPosition.x, 0);
+
+            canvasRect.y -= _scrollPosition.y;
+            canvasRect.x -= _scrollPosition.x;
+            //canvasRect.y += _scrollPosition.y;
+            //canvasRect.y += _scrollPosition.y;
+            GUIScaleUtility.BeginScale(ref canvasRect, pivot, 1 / _zoom, false);
             // Draw the link lines.
             if (Event.current.type == EventType.Repaint)
             {
@@ -353,8 +372,9 @@ namespace Klak.Wiring.Patcher
             // Draw working link line while wiring.
             if (_wiring != null)
                 DrawWorkingLink();
-            
-            GUIUtility.ScaleAroundPivot(new Vector2(1, 1), pivot);
+
+            GUIScaleUtility.EndScale();
+            //GUIUtility.ScaleAroundPivot(new Vector2(1, 1), pivot);
             
             
             GUILayout.FlexibleSpace();
@@ -363,7 +383,7 @@ namespace Klak.Wiring.Patcher
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
 
-            EditorGUILayout.EndScrollView();
+            //EditorGUILayout.EndScrollView();
 
             // Process all the feedback from the leaf UI elements.
             while (!FeedbackQueue.IsEmpty)
