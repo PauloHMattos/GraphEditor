@@ -23,7 +23,8 @@ namespace Klak.Wiring
         {
             set
             {
-                if (!enabled) return;
+                if (!enabled)
+                    return;
                 _y = value;
                 //InvokeEvent();
             }

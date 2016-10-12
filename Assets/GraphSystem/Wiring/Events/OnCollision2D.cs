@@ -6,7 +6,6 @@ namespace Klak.Wiring
     [AddComponentMenu("Klak/Wiring/Event/Collision2D")]
     public class OnCollision2D : EventNode
     {
-
         #region Node I/O
 
         [SerializeField, Outlet]

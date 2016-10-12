@@ -17,10 +17,10 @@ namespace Assets.Klak.Wiring
         private int _outputInt;
         private float _outputFloat;
 
-        [Outlet]
+        [SerializeField, Outlet]
         public IntEvent IntegerOutput;
 
-        [Outlet]
+        [SerializeField, Outlet]
         public FloatEvent FloatOutput;
 
         [Inlet]
@@ -45,20 +45,21 @@ namespace Assets.Klak.Wiring
         private void Evaluate()
         {
             _outputFloat = (float)_parser.Evaluate(_text);
-            switch (RoundMethod)
+            _outputInt = Round(_outputFloat, RoundMethod);
+        }
+
+        public static int Round(float value, RoundMethodTypes roundMethod)
+        {
+            switch (roundMethod)
             {
                 case RoundMethodTypes.Round:
-                    _outputInt = Mathf.RoundToInt(_outputFloat);
-                    break;
+                    return Mathf.RoundToInt(value);
                 case RoundMethodTypes.Trunc:
-                    _outputInt = (int)_outputFloat;
-                    break;
+                    return (int)value;
                 case RoundMethodTypes.Ceil:
-                    _outputInt = Mathf.CeilToInt(_outputFloat);
-                    break;
+                    return Mathf.CeilToInt(value);
                 case RoundMethodTypes.Floor:
-                    _outputInt = Mathf.FloorToInt(_outputFloat);
-                    break;
+                    return Mathf.FloorToInt(value);
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -26,51 +26,51 @@ using UnityEditor;
 
 namespace Klak.Wiring
 {
-    [CanEditMultipleObjects]
-    [CustomEditor(typeof(KeyInput))]
-    public class KeyInputEditor : NodeBaseEditor
-    {
-        SerializedProperty _keyCode;
-        SerializedProperty _offValue;
-        SerializedProperty _onValue;
-        SerializedProperty _interpolator;
-        SerializedProperty _keyDownEvent;
-        SerializedProperty _keyUpEvent;
-        SerializedProperty _valueEvent;
+    //[CanEditMultipleObjects]
+    //[CustomEditor(typeof(KeyInput))]
+    //public class KeyInputEditor : NodeBaseEditor
+    //{
+    //    SerializedProperty _keyCode;
+    //    SerializedProperty _offValue;
+    //    SerializedProperty _onValue;
+    //    SerializedProperty _interpolator;
+    //    SerializedProperty _keyDownEvent;
+    //    SerializedProperty _keyUpEvent;
+    //    SerializedProperty _valueEvent;
 
-        void OnEnable()
-        {
-            _keyCode = serializedObject.FindProperty("_keyCode");
-            _offValue = serializedObject.FindProperty("_offValue");
-            _onValue = serializedObject.FindProperty("_onValue");
-            _interpolator = serializedObject.FindProperty("_interpolator");
-            _keyDownEvent = serializedObject.FindProperty("_keyDownEvent");
-            _keyUpEvent = serializedObject.FindProperty("_keyUpEvent");
-            _valueEvent = serializedObject.FindProperty("_valueEvent");
-        }
+    //    void OnEnable()
+    //    {
+    //        _keyCode = serializedObject.FindProperty("_keyCode");
+    //        _offValue = serializedObject.FindProperty("_offValue");
+    //        _onValue = serializedObject.FindProperty("_onValue");
+    //        _interpolator = serializedObject.FindProperty("_interpolator");
+    //        _keyDownEvent = serializedObject.FindProperty("_keyDownEvent");
+    //        _keyUpEvent = serializedObject.FindProperty("_keyUpEvent");
+    //        _valueEvent = serializedObject.FindProperty("_valueEvent");
+    //    }
 
-        public override void OnInspectorGUI()
-        {
-            serializedObject.Update();
+    //    public override void OnInspectorGUI()
+    //    {
+    //        serializedObject.Update();
 
-            EditorGUILayout.PropertyField(_keyCode);
+    //        EditorGUILayout.PropertyField(_keyCode);
 
-            EditorGUILayout.Space();
+    //        EditorGUILayout.Space();
 
-            EditorGUILayout.PropertyField(_offValue);
-            EditorGUILayout.PropertyField(_onValue);
+    //        EditorGUILayout.PropertyField(_offValue);
+    //        EditorGUILayout.PropertyField(_onValue);
 
-            EditorGUILayout.Space();
+    //        EditorGUILayout.Space();
 
-            EditorGUILayout.PropertyField(_interpolator);
+    //        EditorGUILayout.PropertyField(_interpolator);
 
-            EditorGUILayout.Space();
+    //        EditorGUILayout.Space();
 
-            EditorGUILayout.PropertyField(_keyDownEvent);
-            EditorGUILayout.PropertyField(_keyUpEvent);
-            EditorGUILayout.PropertyField(_valueEvent);
+    //        EditorGUILayout.PropertyField(_keyDownEvent);
+    //        EditorGUILayout.PropertyField(_keyUpEvent);
+    //        EditorGUILayout.PropertyField(_valueEvent);
 
-            serializedObject.ApplyModifiedProperties();
-        }
-    }
+    //        serializedObject.ApplyModifiedProperties();
+    //    }
+    //}
 }

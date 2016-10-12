@@ -43,9 +43,9 @@ namespace Klak.Wiring
 
         #region Node I/O
 
-        [Inlet]
-        public void Trigger()
+        public override void ManualTrigger()
         {
+            base.ManualTrigger();
             _timeQueue.Enqueue(CurrentTime);
         }
 

@@ -23,10 +23,7 @@ namespace Klak.Wiring
                 if (!enabled)
                     return;
                 _inputValue = value;
-                _position.Invoke(_inputValue.position);
-                _localPosition.Invoke(_inputValue.localPosition);
-                _scale.Invoke(_inputValue.localScale);
-                _rotation.Invoke(_inputValue.rotation);
+                InvokeEvents();
             }
         }
 
@@ -41,8 +38,13 @@ namespace Klak.Wiring
 
         #endregion
 
-
-        #region MonoBehaviour functions
-        #endregion
+        protected override void InvokeEvents()
+        {
+            base.InvokeEvents();
+            _position.Invoke(_inputValue.position);
+            _localPosition.Invoke(_inputValue.localPosition);
+            _scale.Invoke(_inputValue.localScale);
+            _rotation.Invoke(_inputValue.rotation);
+        }
     }
 }

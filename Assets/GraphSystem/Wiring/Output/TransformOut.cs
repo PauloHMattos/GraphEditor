@@ -41,6 +41,12 @@ namespace Klak.Wiring
         #endregion
 
         #region Node I/O
+        
+        [Inlet]
+        public Transform TargetTransform
+        {
+            set { _targetTransform = value; }
+        }
 
         [Inlet]
         public Vector3 translate

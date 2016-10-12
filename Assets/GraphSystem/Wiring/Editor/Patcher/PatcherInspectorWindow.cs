@@ -12,7 +12,6 @@ namespace Klak.Wiring.Patcher
         {
             base.OnEnable();
             minSize = new Vector2(250, 0);
-            _patcherMainWindow = EditorWindow.GetWindow<PatcherMainWindow>("Patcher");
         }
 
         protected override void DrawGUI()

@@ -155,6 +155,9 @@ namespace Klak.Wiring.Patcher
                 return;
             }
 
+            if (_patchManager == null)
+                return;
+
             // If there is something wrong with the patch manager, reset it.
             if (!_patchManager.isValid) _patchManager.Reset();
 
