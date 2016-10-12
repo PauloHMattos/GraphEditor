@@ -43,11 +43,11 @@ namespace Klak.Wiring.Patcher
             var newPatchIndex = EditorGUILayout.Popup(
                 patchIndex, _patchManager.MakeNameList(),
                 EditorStyles.toolbarDropDown);
-
-            GUILayout.Space(100);
-            EditorGUIUtility.labelWidth = 50;
-            _zoom = EditorGUILayout.Slider("Scale", _zoom, 0.5f, 1.5f);
-            EditorGUIUtility.labelWidth = 0;
+            GUILayout.FlexibleSpace();
+            //GUILayout.Space(100);
+            //EditorGUIUtility.labelWidth = 50;
+            //_zoom = EditorGUILayout.Slider("Scale", _zoom, 0.5f, 1.5f);
+            //EditorGUIUtility.labelWidth = 0;
 
             EditorGUILayout.EndHorizontal();
 
@@ -149,7 +149,7 @@ namespace Klak.Wiring.Patcher
 
                     foreach (var link in node.CachedLinks)
                     {
-                        var pos = (e.mousePosition - new Vector2(0, 16 / _zoom) + _scrollPosition);
+                        var pos = (e.mousePosition - new Vector2(0, 16 / _zoom) + _scrollPosition) / _zoom;
                         if (link.OnLine(pos))
                         {
                             NodeLink.SelectedLink = link;
@@ -160,7 +160,7 @@ namespace Klak.Wiring.Patcher
             }
         }
         
-        private float _zoom;
+        private float _zoom = 1;
         
         #endregion
 
@@ -269,6 +269,7 @@ namespace Klak.Wiring.Patcher
 
         public void ResetPosition()
         {
+            _scrollPosition = Vector2.zero;
             _mainViewMax = Vector2.zero;
             var min = Vector2.one * float.MaxValue;
             foreach (var node in _patch.nodeList)
@@ -286,20 +287,19 @@ namespace Klak.Wiring.Patcher
         private Vector2 _scrollPosition;
         void DrawMainViewGUI()
         {
-            //_scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, true, true);
+            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, true, true);
 
             EditorGUILayout.BeginHorizontal(GUIStyles.background);
             GUILayout.FlexibleSpace();
 
             var canvasRect = EditorGUILayout.BeginVertical();
-            //canvasRect.height -= 100;
 
             GUILayout.FlexibleSpace();
-            
-            var pivot = new Vector2(Screen.width / 2f, (Screen.height / 2f) + 50);
 
+            //canvasRect.height -= 100;
+            //var pivot = new Vector2(Screen.width / 2f, (Screen.height / 2f) + 50);
             //GUIUtility.ScaleAroundPivot(new Vector2(_zoom, _zoom), pivot);
-            
+
             if (Event.current.button == 2 && Event.current.type == EventType.MouseDrag ||
                 Event.current.button == 0 && Event.current.type == EventType.MouseDrag && Event.current.modifiers == EventModifiers.Alt)
             {
@@ -312,18 +312,11 @@ namespace Klak.Wiring.Patcher
                 menu.DropDown(new Rect(Event.current.mousePosition, Vector2.one));
                 Event.current.Use();
             }
+            
+            //canvasRect.y -= _scrollPosition.y;
+            //canvasRect.x -= _scrollPosition.x;
+            //GUIScaleUtility.BeginScale(ref canvasRect, pivot, 1 / _zoom, false);
 
-            //_scrollPosition.y = Mathf.Max(_scrollPosition.y, _mainViewMax.y);
-            //_scrollPosition.x = Mathf.Max(_scrollPosition.x, _mainViewMax.x);
-
-            //_scrollPosition.y = Mathf.Min(_scrollPosition.y, 0);
-            //_scrollPosition.x = Mathf.Min(_scrollPosition.x, 0);
-
-            canvasRect.y -= _scrollPosition.y;
-            canvasRect.x -= _scrollPosition.x;
-            //canvasRect.y += _scrollPosition.y;
-            //canvasRect.y += _scrollPosition.y;
-            GUIScaleUtility.BeginScale(ref canvasRect, pivot, 1 / _zoom, false);
             // Draw the link lines.
             if (Event.current.type == EventType.Repaint)
             {
@@ -373,8 +366,7 @@ namespace Klak.Wiring.Patcher
             if (_wiring != null)
                 DrawWorkingLink();
 
-            GUIScaleUtility.EndScale();
-            //GUIUtility.ScaleAroundPivot(new Vector2(1, 1), pivot);
+            //GUIScaleUtility.EndScale();
             
             
             GUILayout.FlexibleSpace();
@@ -383,7 +375,7 @@ namespace Klak.Wiring.Patcher
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
 
-            //EditorGUILayout.EndScrollView();
+            EditorGUILayout.EndScrollView();
 
             // Process all the feedback from the leaf UI elements.
             while (!FeedbackQueue.IsEmpty)
