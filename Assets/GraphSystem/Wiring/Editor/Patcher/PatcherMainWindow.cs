@@ -31,6 +31,56 @@ namespace Klak.Wiring.Patcher
 
         #region EditorWindow functions
 
+        protected override void DrawGUI()
+        {
+            EventHandler();
+
+            // Menu
+            EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+            _nodeFactory.CreateNodeMenuGUI(_patch);
+            GUILayout.Space(100);
+            var patchIndex = _patchManager.GetIndexOf(_patch);
+            var newPatchIndex = EditorGUILayout.Popup(
+                patchIndex, _patchManager.MakeNameList(),
+                EditorStyles.toolbarDropDown);
+
+            GUILayout.Space(100);
+            EditorGUIUtility.labelWidth = 50;
+            _zoom = EditorGUILayout.Slider("Scale", _zoom, 0.5f, 1.5f);
+            EditorGUIUtility.labelWidth = 0;
+
+            EditorGUILayout.EndHorizontal();
+
+
+
+            // Main view
+            EditorGUILayout.BeginVertical();
+            DrawMainViewGUI();
+            EditorGUILayout.EndVertical();
+
+            // Re-initialize the editor if the patch selection was changed.
+            if (patchIndex != newPatchIndex)
+            {
+                _patch = _patchManager.RetrieveAt(newPatchIndex);
+                _patchManager.Select(_patch);
+                ResetPosition();
+                ResetSelection();
+                Repaint();
+            }
+
+            // Cancel wiring with a mouse click or hitting the esc key.
+            if (_wiring != null)
+            {
+                var e = Event.current;
+                if (e.type == EventType.MouseUp ||
+                    (e.type == EventType.KeyDown && e.keyCode == KeyCode.Escape))
+                {
+                    _wiring = null;
+                    e.Use();
+                }
+            }
+        }
+
         Component CopyComponent(Component original, GameObject destination)
         {
             var type = original.GetType();
@@ -99,7 +149,7 @@ namespace Klak.Wiring.Patcher
 
                     foreach (var link in node.CachedLinks)
                     {
-                        var pos = e.mousePosition - new Vector2(0, 16) + _scrollPosition;
+                        var pos = (e.mousePosition - new Vector2(0, 16 / _zoom) + _scrollPosition);
                         if (link.OnLine(pos))
                         {
                             NodeLink.SelectedLink = link;
@@ -109,68 +159,9 @@ namespace Klak.Wiring.Patcher
                 }
             }
         }
-
-        public static void AutoResize(float screenWidth, float screenHeight)
-        {
-            Vector2 resizeRatio = new Vector2(Screen.width / screenWidth, Screen.height / screenHeight);
-            GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(resizeRatio.x, resizeRatio.y, 1.0f));
-        }
-
+        
         private float _zoom;
-
-        protected override void DrawGUI()
-        {
-            EventHandler();
-            EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
-
-            // - Create node menu
-            _nodeFactory.CreateNodeMenuGUI(_patch);
-            GUILayout.Space(100);
-
-            // - Patch selector
-            var patchIndex = _patchManager.GetIndexOf(_patch);
-            var newPatchIndex = EditorGUILayout.Popup(
-                patchIndex, _patchManager.MakeNameList(),
-                EditorStyles.toolbarDropDown
-                );
-
-            GUILayout.Space(100);
-            GUILayout.FlexibleSpace();
-            GUILayout.Space(50);
-            EditorGUIUtility.labelWidth = 50;
-            _zoom = EditorGUILayout.Slider("Scale", _zoom, 0.5f, 1.5f);
-            EditorGUIUtility.labelWidth = 0;
-
-            EditorGUILayout.EndHorizontal();
-
-            // - Main view
-            EditorGUILayout.BeginVertical();
-            DrawMainViewGUI();
-            EditorGUILayout.EndVertical();
-            
-            // Re-initialize the editor if the patch selection was changed.
-            if (patchIndex != newPatchIndex)
-            {
-                _patch = _patchManager.RetrieveAt(newPatchIndex);
-                _patchManager.Select(_patch);
-                ResetPosition();
-                ResetSelection();
-                Repaint();
-            }
-
-            // Cancel wiring with a mouse click or hitting the esc key.
-            if (_wiring != null)
-            {
-                var e = Event.current;
-                if (e.type == EventType.MouseUp ||
-                    (e.type == EventType.KeyDown && e.keyCode == KeyCode.Escape))
-                {
-                    _wiring = null;
-                    e.Use();
-                }
-            }
-        }
-
+        
         #endregion
 
         #region Wiring functions
@@ -291,14 +282,16 @@ namespace Klak.Wiring.Patcher
         {
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
-            Matrix4x4 before = GUI.matrix;
-            Matrix4x4 Translation = Matrix4x4.TRS(new Vector3(2, 36, 0), Quaternion.identity, Vector3.one);
-            Matrix4x4 Scale = Matrix4x4.Scale(new Vector3(_zoom, _zoom, _zoom));
-            GUI.matrix = Translation * Scale * Translation.inverse;
-
             EditorGUILayout.BeginHorizontal(GUIStyles.background);
-            EditorGUILayout.BeginVertical(GUIStyles.background);
+            GUILayout.FlexibleSpace();
 
+            EditorGUILayout.BeginVertical();
+            GUILayout.FlexibleSpace();
+
+
+            var pivot = new Vector2(Screen.width / 2f, (Screen.height / 2f) + 50);
+            GUIUtility.ScaleAroundPivot(new Vector2(_zoom, _zoom), pivot);
+            
             if (Event.current.button == 2 && Event.current.type == EventType.MouseDrag ||
                 Event.current.button == 0 && Event.current.type == EventType.MouseDrag && Event.current.modifiers == EventModifiers.Alt)
             {
@@ -329,6 +322,7 @@ namespace Klak.Wiring.Patcher
             _mainViewMax = Vector2.zero;
             var mainViewMin = Vector2.one * 10000;
             // Draw all the nodes and make the bounding box.
+
             BeginWindows();
             var h = 0f;
             foreach (var node in _patch.nodeList)
@@ -346,31 +340,30 @@ namespace Klak.Wiring.Patcher
                 node.windowPosition -= mainViewMin;
             }
             EndWindows();
-            var x = _mainViewMax.x;
-            var y = _mainViewMax.y + 175;
+
+            var x = Mathf.Max(_mainViewMax.x * _zoom, Screen.width);
+            var y = Mathf.Max((_mainViewMax.y + 128) * _zoom, Screen.height - 50);
+
 
             //Place an empty box to expand the scroll view.
             GUILayout.Box(
-                "", EditorStyles.label,
-                GUILayout.Width(x * _zoom),
-                GUILayout.Height(y * _zoom)
-                );
-
+                "", GUIStyle.none,
+                GUILayout.Width(x),
+                GUILayout.Height(y));
             // Draw working link line while wiring.
-            if (_wiring != null) DrawWorkingLink();
-
-
+            if (_wiring != null)
+                DrawWorkingLink();
             
-            //EditorZoomArea.End();
-
+            GUIUtility.ScaleAroundPivot(new Vector2(1, 1), pivot);
+            
+            
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndVertical();
+
+            GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
 
-
-            GUI.matrix = before;
             EditorGUILayout.EndScrollView();
-
 
             // Process all the feedback from the leaf UI elements.
             while (!FeedbackQueue.IsEmpty)

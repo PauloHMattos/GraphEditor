@@ -37,7 +37,7 @@ namespace Klak.Wiring.Patcher
             var p3 = p1 + new Vector2(l, 0);
             var p4 = p2 - new Vector2(l, 0);
             //var color = new Color(0.9f, 0.9f, 0.9f);
-            Handles.DrawBezier(p1, p2, p3, p4, color, null, 3);
+            Handles.DrawBezier(p1, p2, p3, p4, color, null, 4);
         }
 
         public static float DistancePointCurve(Vector2 point, Vector2 curveStart, Vector2 curveEnd)
@@ -45,18 +45,7 @@ namespace Klak.Wiring.Patcher
             var l = Mathf.Min(Mathf.Abs(curveStart.y - curveEnd.y), 150);
             var tangentStart = curveStart + new Vector2(l, 0);
             var tangentEnd = curveEnd - new Vector2(l, 0);
-            var bezierPoints = Handles.MakeBezierPoints(curveStart, curveEnd, tangentStart, tangentEnd, 100);
-            var closestDistanceSquared = float.MaxValue;
-            foreach (var bezierPoint in bezierPoints)
-            {
-                var distanceSquared = Vector2.Distance(point, bezierPoint);
-                if (distanceSquared < closestDistanceSquared)
-                {
-                    closestDistanceSquared = distanceSquared;
-                    //closestPoint = point;
-                }
-            }
-            return closestDistanceSquared;//HandleUtility.DistancePointBezier(point, curveStart, curveEnd, tangentStart, tangentEnd);
+            return HandleUtility.DistancePointBezier(point, curveStart, curveEnd, tangentStart, tangentEnd);
         }
 
         // Clears the property drawer cache to avoid the

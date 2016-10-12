@@ -25,12 +25,14 @@
 using System;
 using Object = System.Object;
 using System.Reflection;
+using JetBrains.Annotations;
 using Klak.Wiring;
 using UnityEditor;
 using UnityEngine;
 
 namespace Klak
 {
+    [UsedImplicitly]
     [CustomPropertyDrawer(typeof(EnumFlagAttribute))]
     public class EnumFlagDrawer : PropertyDrawer
     {
