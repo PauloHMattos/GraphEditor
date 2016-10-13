@@ -253,6 +253,9 @@ namespace Klak.Wiring.Patcher
         // Draw the name field GUI.
         public void DrawNameFieldGUI()
         {
+            if (_instance == null)
+                return;
+
             var newName = EditorGUILayout.DelayedTextField("Node Name", _instance.name);
             if (newName != _instance.name)
             {
