@@ -1,5 +1,7 @@
 # GraphEditor
 
+[![Stories in Ready](https://badge.waffle.io/PauloHMattos/GraphEditor.png?label=ready&title=Ready)](http://waffle.io/PauloHMattos/GraphEditor)
+
 ![0](https://cloud.githubusercontent.com/assets/11336308/19329157/b6f31588-90ad-11e6-9ecf-bc799cb9852e.png)
 
 ![1](https://cloud.githubusercontent.com/assets/11336308/19329158/b729882a-90ad-11e6-9467-5d9654ea5872.png)
