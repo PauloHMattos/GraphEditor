@@ -103,7 +103,7 @@ namespace Klak.Wiring
         
         protected virtual void Awake()
         {
-            if (triggerMechanism == TriggerType.Awake)
+            if (triggerMechanism == TriggerType.Awake && UseAutomaticTrigger)
             {
                 ManualTrigger();
             }
@@ -111,7 +111,7 @@ namespace Klak.Wiring
 
         protected virtual void Update()
         {
-            if (triggerMechanism == TriggerType.Update)
+            if (triggerMechanism == TriggerType.Update && UseAutomaticTrigger)
             {
                 ManualTrigger();
             }
@@ -119,7 +119,7 @@ namespace Klak.Wiring
 
         protected virtual void LateUpdate()
         {
-            if (triggerMechanism == TriggerType.LateUpdate)
+            if (triggerMechanism == TriggerType.LateUpdate && UseAutomaticTrigger)
             {
                 ManualTrigger();
             }
@@ -127,7 +127,7 @@ namespace Klak.Wiring
 
         protected virtual void FixedUpdate()
         {
-            if (triggerMechanism == TriggerType.FixedUpdate)
+            if (triggerMechanism == TriggerType.FixedUpdate && UseAutomaticTrigger)
             {
                 ManualTrigger();
             }
@@ -135,7 +135,7 @@ namespace Klak.Wiring
 
         protected virtual void Start()
         {
-            if (triggerMechanism == TriggerType.Start)
+            if (triggerMechanism == TriggerType.Start && UseAutomaticTrigger)
             {
                 ManualTrigger();
             }
@@ -143,7 +143,7 @@ namespace Klak.Wiring
 
         protected virtual void OnEnable()
         {
-            if (triggerMechanism == TriggerType.Enable)
+            if (triggerMechanism == TriggerType.Enable && UseAutomaticTrigger)
             {
                 ManualTrigger();
             }
@@ -151,7 +151,7 @@ namespace Klak.Wiring
 
         protected virtual void OnDisable()
         {
-            if (triggerMechanism == TriggerType.Disable)
+            if (triggerMechanism == TriggerType.Disable && UseAutomaticTrigger)
             {
                 ManualTrigger();
             }
@@ -229,5 +229,7 @@ namespace Klak.Wiring
             get { return new Vector2(-1000, -1000); }
         }
 
+        public virtual Color BackgroundNodeColor { get { return Color.white; } }
+        public virtual Color ContentColor { get { return Color.black; } }
     }
 }
