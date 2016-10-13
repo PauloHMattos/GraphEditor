@@ -31,28 +31,28 @@ namespace Klak.Wiring.Patcher
     {
         #region Public properties
 
-        static public GUIStyle background {
+        public static GUIStyle background {
             get {
                 if (!_initialized) Initialize();
                 return _background;
             }
         }
 
-        static public GUIStyle node {
+        public static GUIStyle node {
             get {
                 if (!_initialized) Initialize();
                 return _node;
             }
         }
 
-        static public GUIStyle activeNode {
+        public static GUIStyle activeNode {
             get {
                 if (!_initialized) Initialize();
                 return _activeNode;
             }
         }
 
-        static public GUIStyle disabledNode
+        public static GUIStyle disabledNode
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Klak.Wiring.Patcher
             }
         }
 
-        static public GUIStyle disabledSelectedNode
+        public static GUIStyle disabledSelectedNode
         {
             get
             {
@@ -70,38 +70,47 @@ namespace Klak.Wiring.Patcher
             }
         }
 
-        static public GUIStyle labelLeft {
+        public static GUIStyle labelLeft {
             get {
                 if (!_initialized) Initialize();
                 return _labelLeft;
             }
         }
 
-        static public GUIStyle labelRight {
+        public static GUIStyle labelRight {
             get {
                 if (!_initialized) Initialize();
                 return _labelRight;
             }
         }
 
-        static public GUIStyle button {
+        public static GUIStyle button {
             get {
                 if (!_initialized) Initialize();
                 return _button;
             }
         }
 
-        static public GUIStyle horizontalScrollbar {
+        public static GUIStyle horizontalScrollbar {
             get {
                 if (!_initialized) Initialize();
                 return _horizontalScrollbar;
             }
         }
 
-        static public GUIStyle verticalScrollbar {
+        public static GUIStyle verticalScrollbar {
             get {
                 if (!_initialized) Initialize();
                 return _verticalScrollbar;
+            }
+        }
+
+        public static Texture2D backgroundGrid
+        {
+            get
+            {
+                if (!_initialized) Initialize();
+                return _backgroundGrid;
             }
         }
 
@@ -121,10 +130,13 @@ namespace Klak.Wiring.Patcher
         static GUIStyle _verticalScrollbar;
         static GUIStyle _disabledNode;
         static GUIStyle _disabledSelectedNode;
+        private static Texture2D _backgroundGrid;
 
         public static void Initialize()
         {
             _background = new GUIStyle("flow background");
+            _backgroundGrid = (Texture2D)EditorGUIUtility.Load("GraphSystem/Textures/background.png");
+            
             _node = new GUIStyle("flow node 0");
             _node.fixedWidth = 175;
             _node.stretchWidth = true;

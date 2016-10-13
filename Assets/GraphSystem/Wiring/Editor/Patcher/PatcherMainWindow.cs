@@ -6,6 +6,9 @@ namespace Klak.Wiring.Patcher
 {
     public class PatcherMainWindow : PatcherWindow
     {
+        private Vector2 _scrollPosition;
+
+
         #region Wiring state class
         WiringState _wiring;
         class WiringState
@@ -31,8 +34,28 @@ namespace Klak.Wiring.Patcher
 
         #region EditorWindow functions
 
+        private void DrawBackground()
+        {
+            if (Event.current.type != EventType.Repaint)
+                return;
+            
+            var width = _zoom / GUIStyles.backgroundGrid.width;
+            var height = _zoom / GUIStyles.backgroundGrid.height;
+            var offset = -_scrollPosition / _zoom;
+            var uvDrawRect = new Rect(-offset.x * width,
+                (offset.y - Screen.height) * height,
+                Screen.width * width,
+                Screen.height * height);
+            
+            GUI.DrawTextureWithTexCoords(
+                new Rect(0, 17, Screen.width, Screen.height),
+                GUIStyles.backgroundGrid,
+                uvDrawRect);
+        }
+
         protected override void DrawGUI()
         {
+            //DrawBackground();
             EventHandler();
 
             // Menu
@@ -44,11 +67,6 @@ namespace Klak.Wiring.Patcher
                 patchIndex, _patchManager.MakeNameList(),
                 EditorStyles.toolbarDropDown);
             GUILayout.FlexibleSpace();
-            //GUILayout.Space(100);
-            //EditorGUIUtility.labelWidth = 50;
-            //_zoom = EditorGUILayout.Slider("Scale", _zoom, 0.5f, 1.5f);
-            //EditorGUIUtility.labelWidth = 0;
-
             EditorGUILayout.EndHorizontal();
 
 
@@ -80,32 +98,8 @@ namespace Klak.Wiring.Patcher
                 }
             }
         }
-
-        Component CopyComponent(Component original, GameObject destination)
-        {
-            var type = original.GetType();
-            var copy = destination.AddComponent(type);
-            var flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance |
-                        BindingFlags.Default | BindingFlags.DeclaredOnly;
-
-            var fields = type.GetFields(flags);
-            foreach (var field in fields)
-            {
-                if (field.IsStatic) continue;
-                field.SetValue(copy, field.GetValue(original));
-            }
-
-            var props = type.GetProperties(flags);
-            foreach (var prop in props)
-            {
-                if (!prop.CanWrite || !prop.CanWrite || prop.Name == "name") continue;
-                prop.SetValue(copy, prop.GetValue(original, null), null);
-            }
-            return copy;
-        }
-
+        
         private Node _currentCopiedNode;
-
         private void EventHandler()
         {
             FeedbackQueue.Reset();
@@ -284,22 +278,14 @@ namespace Klak.Wiring.Patcher
             GUIScaleUtility.CheckInit();
         }
 
-        private Vector2 _scrollPosition;
         void DrawMainViewGUI()
         {
+            DrawBackground();
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, true, true);
 
-            EditorGUILayout.BeginHorizontal(GUIStyles.background);
+            EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-
-            var canvasRect = EditorGUILayout.BeginVertical();
-
-            GUILayout.FlexibleSpace();
-
-            //canvasRect.height -= 100;
-            //var pivot = new Vector2(Screen.width / 2f, (Screen.height / 2f) + 50);
-            //GUIUtility.ScaleAroundPivot(new Vector2(_zoom, _zoom), pivot);
-
+            
             if (Event.current.button == 2 && Event.current.type == EventType.MouseDrag ||
                 Event.current.button == 0 && Event.current.type == EventType.MouseDrag && Event.current.modifiers == EventModifiers.Alt)
             {
@@ -313,10 +299,6 @@ namespace Klak.Wiring.Patcher
                 Event.current.Use();
             }
             
-            //canvasRect.y -= _scrollPosition.y;
-            //canvasRect.x -= _scrollPosition.x;
-            //GUIScaleUtility.BeginScale(ref canvasRect, pivot, 1 / _zoom, false);
-
             // Draw the link lines.
             if (Event.current.type == EventType.Repaint)
             {
@@ -342,7 +324,7 @@ namespace Klak.Wiring.Patcher
                 node.DrawWindowGUI();
                 _mainViewMax = Vector2.Max(_mainViewMax, node.windowPosition);
                 mainViewMin = Vector2.Min(mainViewMin, node.windowPosition);
-                h = Mathf.Max(h, node.LastRect.y);
+                h = Mathf.Max(h, node.LastRect.y + node.LastRect.height);
             }
             _mainViewMax.x += 256;
             mainViewMin.x -= 50;
@@ -354,9 +336,8 @@ namespace Klak.Wiring.Patcher
             EndWindows();
 
             var x = Mathf.Max(_mainViewMax.x * _zoom, Screen.width);
-            var y = Mathf.Max((_mainViewMax.y + 128) * _zoom, Screen.height - 50);
-
-
+            var y = Mathf.Max((h + 50) * _zoom, Screen.height - 50);
+            
             //Place an empty box to expand the scroll view.
             GUILayout.Box(
                 "", GUIStyle.none,
@@ -365,13 +346,7 @@ namespace Klak.Wiring.Patcher
             // Draw working link line while wiring.
             if (_wiring != null)
                 DrawWorkingLink();
-
-            //GUIScaleUtility.EndScale();
             
-            
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndVertical();
-
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
 

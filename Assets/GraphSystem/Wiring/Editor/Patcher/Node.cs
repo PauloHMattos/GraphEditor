@@ -233,6 +233,7 @@ namespace Klak.Wiring.Patcher
                 _serializedObject.ApplyModifiedProperties();
             }
             LastRect = newRect;
+            LastRect.height += 20 + (_inlets.Count*20) + 5 + (_outlets.Count*20);
         }
 
         // Draw the name field GUI.
