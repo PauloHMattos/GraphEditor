@@ -60,7 +60,7 @@ namespace Klak.Wiring.Patcher
             var window = EditorWindow.GetWindow<PatcherMainWindow>("Patcher", typeof(SceneView));
             var uI = typeof(Editor).Assembly.GetType("UnityEditor.InspectorWindow");
             var inspector = EditorWindow.GetWindow<PatcherInspectorWindow>("Patcher Inspector", uI);
-
+            
             window._patch = new Patch(patchInstance);
             window._patchManager.Select(window._patch);
 
@@ -81,6 +81,7 @@ namespace Klak.Wiring.Patcher
 
         protected virtual void OnEnable()
         {
+            titleContent.image = (Texture2D)EditorGUIUtility.Load("GraphSystem/Textures/icon.png");
             ResetSelection();
             _patchManager = new PatchManager();
             _nodeFactory = new NodeFactory();
