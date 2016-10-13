@@ -82,14 +82,16 @@ namespace Klak.Wiring
 
         #region MonoBehaviour functions
 
-        void Start()
+        protected override void Start()
         {
+            base.Start();
             _isPlaying = _playOnStart;
             _timeScale = 1;
         }
 
-        void Update()
+        protected override void Update()
         {
+            base.Update();
             if (_isPlaying)
             {
                 _time += Time.deltaTime * _speed * _timeScale;
