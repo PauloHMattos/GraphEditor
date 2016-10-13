@@ -4,7 +4,7 @@ namespace Klak.Wiring
 {
     [NodeType("Decomposer", "Bounds")]
     [AddComponentMenu("Klak/Wiring/Decomposer/Bounds")]
-    public class BoundsDecomposer : OutputNode
+    public class BoundsDecomposer : DecomposerNode
     {
         #region Private members
 

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Decomposer/Transform")]
-    public class TransformDecomposer : NodeBase
+    public class TransformDecomposer : DecomposerNode
     {
         #region Private members
 

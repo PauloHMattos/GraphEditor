@@ -4,7 +4,7 @@ namespace Klak.Wiring
 {
     [NodeType("Decomposer", "Physics", "2D", "Collider")]
     [AddComponentMenu("Klak/Wiring/Decomposer/Collider2D")]
-    public class Collider2DDecomposer : NodeBase
+    public class Collider2DDecomposer : DecomposerNode
     {
         #region Private members
 

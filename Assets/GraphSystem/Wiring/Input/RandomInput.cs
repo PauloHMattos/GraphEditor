@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Input/Random Input")]
-    public class RandomInput : NodeBase
+    public class RandomInput : InputNode
     {
         [SerializeField] private int _seed;
         [SerializeField] private float _min;

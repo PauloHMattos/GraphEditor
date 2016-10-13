@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Decomposer/ContactPoint2D")]
-    public class ContactPoint2DDecomposer : NodeBase
+    public class ContactPoint2DDecomposer : DecomposerNode
     {
         #region Private members
 

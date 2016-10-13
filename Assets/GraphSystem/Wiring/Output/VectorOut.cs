@@ -27,7 +27,7 @@ using System.Reflection;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Output/Generic/Vector Out")]
-    public class VectorOut : NodeBase
+    public class VectorOut : OutputNode
     {
         #region Editable properties
 

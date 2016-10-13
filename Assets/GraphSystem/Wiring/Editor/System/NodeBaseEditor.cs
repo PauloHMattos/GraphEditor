@@ -8,7 +8,7 @@ namespace Klak.Wiring
         private NodeBase _nodeBase;
         SerializedProperty isNodeActive;
         SerializedProperty triggerMechanism;
-
+        
         protected virtual void OnEnable()
         {
             _nodeBase = (NodeBase) target;

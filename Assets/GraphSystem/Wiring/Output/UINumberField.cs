@@ -6,7 +6,7 @@ namespace Klak.Wiring
 {
     [NodeType("Output", "Component", "UI", "Number Field")]
     [AddComponentMenu("Klak/Wiring/Output/UI/Number Field")]
-    public class UINumberField : NodeBase
+    public class UINumberField : OutputNode
     {
         public Text field;
         public Behaviour behaviour;
@@ -21,6 +21,11 @@ namespace Klak.Wiring
         public float value
         {
             set { _value = value; }
+        }
+
+        public override bool ShowTriggerInlet
+        {
+            get { return true; }
         }
 
         protected override void InvokeEvents()

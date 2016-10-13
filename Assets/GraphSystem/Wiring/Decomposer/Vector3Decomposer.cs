@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Decomposer/Vector3")]
-    public class Vector3Decomposer : NodeBase
+    public class Vector3Decomposer : DecomposerNode
     {
         #region Private members
 

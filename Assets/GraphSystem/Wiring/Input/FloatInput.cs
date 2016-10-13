@@ -5,7 +5,7 @@ namespace Klak.Wiring
 {
     [NodeType("Input", "Float")]
     [AddComponentMenu("Klak/Wiring/Input/Float Input")]
-    public class FloatInput : NodeBase
+    public class FloatInput : InputNode
     {
         
         #region Editable properties

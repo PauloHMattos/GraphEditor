@@ -27,7 +27,7 @@ using Klak.Math;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Input/Noise")]
-    public class Noise : NodeBase
+    public class Noise : InputNode
     {
         #region Editable properties
 

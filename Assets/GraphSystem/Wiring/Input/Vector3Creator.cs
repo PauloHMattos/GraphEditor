@@ -4,7 +4,7 @@ namespace Klak.Wiring
 {
     [NodeType("Input", "Vector3")]
     [AddComponentMenu("Klak/Wiring/Input/Vector")]
-    public class Vector3Creator : NodeBase
+    public class Vector3Creator : InputNode
     {
         #region Node I/O
         

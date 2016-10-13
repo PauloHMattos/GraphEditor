@@ -4,7 +4,7 @@ namespace Klak.Wiring
 {
     [NodeType("Input", "String")]
     [AddComponentMenu("Klak/Wiring/Input/String Input")]
-    public class StringInput : NodeBase
+    public class StringInput : InputNode
     {
 
         #region Editable properties

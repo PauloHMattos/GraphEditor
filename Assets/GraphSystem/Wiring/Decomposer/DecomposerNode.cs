@@ -2,22 +2,16 @@ using UnityEngine;
 
 namespace Klak.Wiring
 {
-    public class EventNode : NodeBase
+    public class DecomposerNode : NodeBase
     {
         public override Color BackgroundNodeColor
         {
-            get { return Color.cyan; }
+            get { return Color.green; }
         }
 
         public override bool ShowTriggerInlet
         {
             get { return false; }
-        }
-
-        protected override void Awake()
-        {
-            triggerMechanism = 0;
-            base.Awake();
         }
     }
 }

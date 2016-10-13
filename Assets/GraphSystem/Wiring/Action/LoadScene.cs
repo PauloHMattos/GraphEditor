@@ -10,7 +10,7 @@ namespace Assets.GraphSystem.Wiring.Action
 {
     [NodeType("Action", "LoadLevel")]
     [AddComponentMenu("Klak/Wiring/Action/LoadScene")]
-    public class LoadScene : NodeBase
+    public class LoadScene : ActionNode
     {
         [SerializeField]
         private bool _reloadActiveScene;

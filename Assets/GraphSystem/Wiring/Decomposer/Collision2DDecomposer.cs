@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Decomposer/Collision2D")]
-    public class Collision2DDecomposer : NodeBase
+    public class Collision2DDecomposer : DecomposerNode
     {
         #region Private members
 

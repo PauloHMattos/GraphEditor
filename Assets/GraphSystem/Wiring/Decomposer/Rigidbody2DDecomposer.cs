@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Decomposer/Rigidbody2D")]
-    public class Rigidbody2DDecomposer : NodeBase
+    public class Rigidbody2DDecomposer : DecomposerNode
     {
         #region Private members
 

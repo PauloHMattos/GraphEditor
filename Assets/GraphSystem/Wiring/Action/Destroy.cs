@@ -5,7 +5,7 @@ namespace Assets.GraphSystem.Wiring.Action
 {
     [NodeType("Action", "Destroy")]
     [AddComponentMenu("Klak/Wiring/Action/Destroy")]
-    public class Destroy : NodeBase
+    public class Destroy : ActionNode
     {
         [SerializeField] private GameObject _objectInstance;
 

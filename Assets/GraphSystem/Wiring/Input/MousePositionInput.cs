@@ -27,7 +27,7 @@ using Klak.Math;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Input/Mouse Position Input")]
-    public class MousePositionInput : NodeBase
+    public class MousePositionInput : InputNode
     {
         #region Editable properties
 

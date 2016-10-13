@@ -5,7 +5,7 @@ namespace Assets.GraphSystem.Wiring.Action
 {
     [NodeType("Action", "Instantiate")]
     [AddComponentMenu("Klak/Wiring/Action/Instantiate")]
-    public class Instantiate : NodeBase
+    public class Instantiate : ActionNode
     {
         public GameObject prefab;
         [SerializeField] private Vector3 _position;

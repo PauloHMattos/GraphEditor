@@ -224,7 +224,16 @@ namespace Klak.Wiring.Patcher
             {
                 style = isFocused ? GUIStyles.disabledSelectedNode : GUIStyles.disabledNode;
             }
+            var contentColor = GUI.contentColor;
+            var backgroundColor = GUI.backgroundColor;
+
+            GUI.contentColor = _instance.ContentColor;
+            GUI.backgroundColor = _instance.BackgroundNodeColor;
+
             var newRect = GUILayout.Window(_windowID, rect, OnWindowGUI, displayName, style);
+
+            GUI.contentColor = contentColor;
+            GUI.backgroundColor = backgroundColor;
 
             // Update the serialized info if the position was changed.
             if (newRect.position != rect.position) {

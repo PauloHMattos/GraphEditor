@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Input/Time Input")]
-    public class TimeInput : NodeBase
+    public class TimeInput : InputNode
     {
         public enum TimeType
         {
