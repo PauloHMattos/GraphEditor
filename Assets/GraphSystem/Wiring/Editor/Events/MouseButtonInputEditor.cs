@@ -27,23 +27,48 @@
 //namespace Klak.Wiring
 //{
 //    [CanEditMultipleObjects]
-//    [CustomEditor(typeof(Starter))]
-//    public class StarterEditor : NodeBaseEditor
+//    [CustomEditor(typeof(MouseButtonInput))]
+//    public class MouseButtonInputEditor : NodeBaseEditor
 //    {
-//        SerializedProperty _onStartEvent;
+//        SerializedProperty _buttonIndex;
+//        SerializedProperty _offValue;
+//        SerializedProperty _onValue;
+//        SerializedProperty _interpolator;
+//        SerializedProperty _buttonDownEvent;
+//        SerializedProperty _buttonUpEvent;
+//        SerializedProperty _valueEvent;
 
-//        protected override void OnEnable()
+//        void OnEnable()
 //        {
-//            base.OnEnable();
-//            _onStartEvent = serializedObject.FindProperty("_onStartEvent");
+//            _buttonIndex = serializedObject.FindProperty("_buttonIndex");
+//            _offValue = serializedObject.FindProperty("_offValue");
+//            _onValue = serializedObject.FindProperty("_onValue");
+//            _interpolator = serializedObject.FindProperty("_interpolator");
+//            _buttonDownEvent = serializedObject.FindProperty("_buttonDownEvent");
+//            _buttonUpEvent = serializedObject.FindProperty("_buttonUpEvent");
+//            _valueEvent = serializedObject.FindProperty("_valueEvent");
 //        }
 
 //        public override void OnInspectorGUI()
 //        {
-//            base.OnInspectorGUI();
 //            serializedObject.Update();
 
-//            EditorGUILayout.PropertyField(_onStartEvent);
+//            EditorGUILayout.PropertyField(_buttonIndex);
+
+//            EditorGUILayout.Space();
+
+//            EditorGUILayout.PropertyField(_offValue);
+//            EditorGUILayout.PropertyField(_onValue);
+
+//            EditorGUILayout.Space();
+
+//            EditorGUILayout.PropertyField(_interpolator);
+
+//            EditorGUILayout.Space();
+
+//            EditorGUILayout.PropertyField(_buttonDownEvent);
+//            EditorGUILayout.PropertyField(_buttonUpEvent);
+//            EditorGUILayout.PropertyField(_valueEvent);
 
 //            serializedObject.ApplyModifiedProperties();
 //        }

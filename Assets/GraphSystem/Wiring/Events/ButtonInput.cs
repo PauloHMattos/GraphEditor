@@ -26,13 +26,14 @@ using Klak.Math;
 
 namespace Klak.Wiring
 {
-    [AddComponentMenu("Klak/Wiring/Input/Mouse Button Input")]
-    public class MouseButtonInput : NodeBase
+    [NodeType("Events")]
+    [AddComponentMenu("Klak/Wiring/Event/Button Input")]
+    public class ButtonInput : EventNode
     {
         #region Editable properties
 
         [SerializeField]
-        int _buttonIndex = 0;
+        string _buttonName = "Jump";
 
         [SerializeField]
         float _offValue = 0.0f;
@@ -62,19 +63,21 @@ namespace Klak.Wiring
 
         FloatInterpolator _floatValue;
 
-        void Start()
+        protected override void Start()
         {
+            base.Start();
             _floatValue = new FloatInterpolator(0, _interpolator);
         }
 
-        void Update()
+        protected override void Update()
         {
-            if (Input.GetMouseButtonDown(_buttonIndex))
+            base.Update();
+            if (Input.GetButtonDown(_buttonName))
             {
                 _buttonDownEvent.Invoke();
                 _floatValue.targetValue = _onValue;
             }
-            else if (Input.GetMouseButtonUp(_buttonIndex))
+            else if (Input.GetButtonUp(_buttonName))
             {
                 _buttonUpEvent.Invoke();
                 _floatValue.targetValue = _offValue;
