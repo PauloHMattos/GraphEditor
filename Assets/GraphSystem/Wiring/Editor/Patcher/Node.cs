@@ -219,16 +219,21 @@ namespace Klak.Wiring.Patcher
             var rect = new Rect(windowPosition, Vector2.one);
 
             // Show the window.
+
             var style = isFocused ? GUIStyles.activeNode : GUIStyles.node;
-            if (!_instance.isNodeActive)
-            {
-                style = isFocused ? GUIStyles.disabledSelectedNode : GUIStyles.disabledNode;
-            }
+
             var contentColor = GUI.contentColor;
             var backgroundColor = GUI.backgroundColor;
 
-            GUI.contentColor = _instance.ContentColor;
-            GUI.backgroundColor = _instance.BackgroundNodeColor;
+            var nodeColor = _instance.BackgroundNodeColor;
+            var nodeContentColor = _instance.ContentColor;
+            if (!_instance.isNodeActive)
+            {
+                nodeColor.a = 0.4f;
+                nodeContentColor.a = 0.4f;
+            }
+            GUI.contentColor = nodeContentColor;
+            GUI.backgroundColor = nodeColor;
 
             var newRect = GUILayout.Window(_windowID, rect, OnWindowGUI, displayName, style);
 

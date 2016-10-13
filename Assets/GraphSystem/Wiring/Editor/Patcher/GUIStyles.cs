@@ -52,23 +52,23 @@ namespace Klak.Wiring.Patcher
             }
         }
 
-        public static GUIStyle disabledNode
-        {
-            get
-            {
-                if (!_initialized || _disabledNode == null) Initialize();
-                return _disabledNode;
-            }
-        }
+        //public static GUIStyle disabledNode
+        //{
+        //    get
+        //    {
+        //        if (!_initialized || _disabledNode == null) Initialize();
+        //        return _disabledNode;
+        //    }
+        //}
 
-        public static GUIStyle disabledSelectedNode
-        {
-            get
-            {
-                if (!_initialized) Initialize();
-                return _disabledSelectedNode;
-            }
-        }
+        //public static GUIStyle disabledSelectedNode
+        //{
+        //    get
+        //    {
+        //        if (!_initialized) Initialize();
+        //        return _disabledSelectedNode;
+        //    }
+        //}
 
         public static GUIStyle labelLeft {
             get {
@@ -145,13 +145,13 @@ namespace Klak.Wiring.Patcher
             _activeNode.fixedWidth = 175;
             _activeNode.stretchWidth = true;
 
-            _disabledNode = new GUIStyle("flow node 6");
-            _disabledNode.fixedWidth = 175;
-            _disabledNode.stretchWidth = true;
+            //_disabledNode = new GUIStyle("flow node 6");
+            //_disabledNode.fixedWidth = 175;
+            //_disabledNode.stretchWidth = true;
 
-            _disabledSelectedNode = new GUIStyle("flow node 6 on");
-            _disabledSelectedNode.fixedWidth = 175;
-            _disabledSelectedNode.stretchWidth = true;
+            //_disabledSelectedNode = new GUIStyle("flow node 6 on");
+            //_disabledSelectedNode.fixedWidth = 175;
+            //_disabledSelectedNode.stretchWidth = true;
 
             _labelLeft = new GUIStyle("Label");
             _labelRight = new GUIStyle("RightLabel");
