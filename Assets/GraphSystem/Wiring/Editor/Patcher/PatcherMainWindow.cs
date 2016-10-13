@@ -281,7 +281,7 @@ namespace Klak.Wiring.Patcher
         void DrawMainViewGUI()
         {
             DrawBackground();
-            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, true, true);
+            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -326,17 +326,17 @@ namespace Klak.Wiring.Patcher
                 mainViewMin = Vector2.Min(mainViewMin, node.windowPosition);
                 h = Mathf.Max(h, node.LastRect.y + node.LastRect.height);
             }
-            _mainViewMax.x += 256;
-            mainViewMin.x -= 50;
-            mainViewMin.y -= 50;
+            _mainViewMax.x += 200;
+            mainViewMin.x -= 20;
+            mainViewMin.y -= 20;
             foreach (var node in _patch.nodeList)
             {
                 node.windowPosition -= mainViewMin;
             }
             EndWindows();
 
-            var x = Mathf.Max(_mainViewMax.x * _zoom, Screen.width);
-            var y = Mathf.Max((h + 50) * _zoom, Screen.height - 50);
+            var x = Mathf.Max(_mainViewMax.x * _zoom, Screen.width - 18);
+            var y = Mathf.Max((h + 20) * _zoom, Screen.height - 37);
             
             //Place an empty box to expand the scroll view.
             GUILayout.Box(
