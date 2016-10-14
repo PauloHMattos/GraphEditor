@@ -83,7 +83,8 @@ namespace Klak.Wiring.Patcher
                 if (_propertyEditor == null)
                     _propertyEditor = activeNode.CreateEditor();
 
-                _propertyEditor.OnInspectorGUI();
+                if(_propertyEditor.target != null)
+                    _propertyEditor.OnInspectorGUI();
             }
         }
     }

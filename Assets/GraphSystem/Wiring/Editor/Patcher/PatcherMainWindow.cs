@@ -268,11 +268,24 @@ namespace Klak.Wiring.Patcher
         {
             _mainViewMax = Vector2.zero;
             //var min = Vector2.one * float.MaxValue;
+            //var max = Vector2.zero;
+            //var maxHeight = 0f;
             //foreach (var node in _patch.nodeList)
             //{
             //    min = Vector2.Min(min, node.windowPosition);
+            //    max = Vector2.Max(max, node.windowPosition);
+            //    maxHeight = Mathf.Max(maxHeight, node.LastRect.height);
             //}
-            _scrollPosition = Vector2.zero;
+            //var width = ((max - min).x + 200) - Screen.width;
+            //var height = ((max - min).y + maxHeight) - Screen.height;
+
+            foreach (var node in _patch.nodeList)
+            {
+                _scrollPosition = node.windowPosition;
+                break;
+                //node.windowPosition += new Vector2(width / 2, height / 2);
+            }
+            //_scrollPosition = Vector2.zero;
         }
 
         protected override void OnEnable()
@@ -332,10 +345,10 @@ namespace Klak.Wiring.Patcher
             _mainViewMax.x += 200;
             mainViewMin.x -= 20;
             mainViewMin.y -= 20;
-            foreach (var node in _patch.nodeList)
-            {
-                node.windowPosition -= mainViewMin;
-            }
+            //foreach (var node in _patch.nodeList)
+            //{
+            //    node.windowPosition -= mainViewMin;
+            //}
             EndWindows();
 
             var x = Mathf.Max(_mainViewMax.x * _zoom, Screen.width - 18);
