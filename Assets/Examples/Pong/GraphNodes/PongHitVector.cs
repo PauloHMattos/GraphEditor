@@ -11,6 +11,11 @@ namespace Klak.SpecificNodes
         public Rigidbody2D _racketRight;
         public Rigidbody2D _racketLeft;
 
+        public override Color BackgroundNodeColor
+        {
+            get { return Color.magenta; }
+        }
+
         [Inlet]
         public Collision2D Input
         {
