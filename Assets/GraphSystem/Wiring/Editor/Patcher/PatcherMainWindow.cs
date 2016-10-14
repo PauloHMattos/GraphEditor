@@ -266,13 +266,13 @@ namespace Klak.Wiring.Patcher
 
         public void ResetPosition()
         {
-            _scrollPosition = Vector2.zero;
             _mainViewMax = Vector2.zero;
-            var min = Vector2.one * float.MaxValue;
-            foreach (var node in _patch.nodeList)
-            {
-                min = Vector2.Min(min, node.windowPosition);
-            }
+            //var min = Vector2.one * float.MaxValue;
+            //foreach (var node in _patch.nodeList)
+            //{
+            //    min = Vector2.Min(min, node.windowPosition);
+            //}
+            _scrollPosition = Vector2.zero;
         }
 
         protected override void OnEnable()
