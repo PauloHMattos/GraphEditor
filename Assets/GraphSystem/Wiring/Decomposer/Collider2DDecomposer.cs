@@ -24,10 +24,14 @@ namespace Klak.Wiring
                 if (!enabled)
                     return;
                 _inputValue = value;
+                _gameObject.Invoke(_inputValue.gameObject);
                 _boundsEvent.Invoke(_inputValue.bounds);
             }
         }
 
+
+        [SerializeField, Outlet]
+        GameObjectEvent _gameObject = new GameObjectEvent();
         [SerializeField, Outlet]
         BoundsEvent _boundsEvent = new BoundsEvent();
 

@@ -45,6 +45,7 @@ namespace Klak.Wiring
         }
 
         [SerializeField, Outlet] private FloatEvent _floatValueEvent = new FloatEvent();
+        [SerializeField, Outlet] private FloatEvent _roundedFloatValueEvent = new FloatEvent();
         [SerializeField, Outlet] private IntEvent _intValueEvent = new IntEvent();
 
         protected override void Start()
@@ -62,9 +63,11 @@ namespace Klak.Wiring
         {
             base.InvokeEvents();
             var value = Random.Range(_min, _max);
-            //Debug.Log(value);
+            var roundedInt = MathParser.Round(value, roundMethod);
+
             _floatValueEvent.Invoke(value);
-            _intValueEvent.Invoke(MathParser.Round(value, roundMethod));
+            _roundedFloatValueEvent.Invoke(roundedInt + 0.0f);
+            _intValueEvent.Invoke(roundedInt);
         }
     }
 }

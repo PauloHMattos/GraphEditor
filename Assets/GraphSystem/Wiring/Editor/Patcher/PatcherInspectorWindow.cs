@@ -45,6 +45,7 @@ namespace Klak.Wiring.Patcher
                 return;
             }
 
+            EditorGUILayout.LabelField(NodeLink.SelectedLinkId.ToString());
             EditorGUILayout.LabelField(nodeLink.fromNode.displayName);
             EditorGUILayout.LabelField(nodeLink.fromOutlet.displayName);
             EditorGUILayout.LabelField(nodeLink.toNode.displayName);

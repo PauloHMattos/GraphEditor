@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using System.Reflection;
@@ -141,11 +142,13 @@ namespace Klak.Wiring.Patcher
                     if(node.CachedLinks == null)
                         node.CacheLinks(_patch);
 
-                    foreach (var link in node.CachedLinks)
+                    for (int index = 0; index < node.CachedLinks.Count; index++)
                     {
-                        var pos = (e.mousePosition - new Vector2(0, 16 / _zoom) + _scrollPosition) / _zoom;
+                        var link = node.CachedLinks[index];
+                        var pos = (e.mousePosition - new Vector2(0, 16/_zoom) + _scrollPosition)/_zoom;
                         if (link.OnLine(pos))
                         {
+                            NodeLink.SelectedLinkId = index;
                             NodeLink.SelectedLink = link;
                             Node.ActiveNode = null;
                         }
