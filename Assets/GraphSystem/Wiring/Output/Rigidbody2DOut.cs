@@ -9,14 +9,26 @@ namespace Klak.Wiring
         #region Editable properties
 
         [SerializeField]
-        Rigidbody2D _targetRigidbody;
+        private Rigidbody2D _targetRigidbody;
 
         [SerializeField]
-        bool _addToOriginal = true;
+        private bool _addToOriginal = true;
+
 
         #endregion
 
         #region Node I/O
+
+        [Inlet]
+        public Rigidbody2D rigidbody2D
+        {
+            set
+            {
+                if (!isNodeActive || !enabled)
+                    return;
+                _targetRigidbody = value;
+            }
+        }
 
         [Inlet]
         public Vector3 velocity
