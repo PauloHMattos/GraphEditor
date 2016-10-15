@@ -296,8 +296,8 @@ namespace Klak.Wiring.Patcher
 
         void DrawMainViewGUI()
         {
-            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
             DrawBackground();
+            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
