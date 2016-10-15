@@ -29,6 +29,12 @@ namespace Klak.Wiring
     [AddComponentMenu("Klak/Wiring/Switching/Toggle")]
     public class Toggle : NodeBase
     {
+
+        public override bool ShowTriggerInlet
+        {
+            get { return false; }
+        }
+
         #region Editable properties
 
         [SerializeField]
@@ -87,13 +93,13 @@ namespace Klak.Wiring
 
         #region MonoBehaviour functions
 
-        void Start()
+        protected override void Start()
         {
             _value = new FloatInterpolator(_offValue, _interpolator);
             if (_sendOnStartUp) _offEvent.Invoke();
         }
 
-        void Update()
+        protected override void Update()
         {
             _valueEvent.Invoke(_value.Step());
         }

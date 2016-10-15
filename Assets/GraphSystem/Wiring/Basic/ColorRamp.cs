@@ -28,6 +28,11 @@ namespace Klak.Wiring
     [AddComponentMenu("Klak/Wiring/Convertion/Color Ramp")]
     public class ColorRamp : NodeBase
     {
+        public override bool ShowTriggerInlet
+        {
+            get { return false; }
+        }
+
         #region Editable properties
 
         public enum ColorMode { Gradient, ColorArray }
@@ -72,7 +77,7 @@ namespace Klak.Wiring
 
         [SerializeField, Outlet]
         ColorEvent _colorEvent = new ColorEvent();
-
+        
         #endregion
     }
 }

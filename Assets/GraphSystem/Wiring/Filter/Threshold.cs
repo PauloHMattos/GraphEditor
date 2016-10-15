@@ -28,6 +28,11 @@ namespace Klak.Wiring
     [AddComponentMenu("Klak/Wiring/Switching/Threshold")]
     public class Threshold : NodeBase
     {
+        public override bool ShowTriggerInlet
+        {
+            get { return false; }
+        }
+
         #region Editable properties
 
         [SerializeField]
@@ -76,8 +81,9 @@ namespace Klak.Wiring
 
         #region MonoBehaviour functions
 
-        void Update()
+        protected override void Update()
         {
+            base.Update();
             if (_currentValue >= _threshold)
             {
                 _delayTimer = 0;

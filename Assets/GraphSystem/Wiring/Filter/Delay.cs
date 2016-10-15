@@ -68,7 +68,7 @@ namespace Klak.Wiring
 
         #region MonoBehaviour functions
 
-        void Update()
+        protected override void Update()
         {
             while (_timeQueue.Count > 0 &&
                    _timeQueue.Peek() + _interval < CurrentTime)
