@@ -4,6 +4,7 @@ timeCreated: 1476299806
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
+    8900000: generatedCubemap
     21300000: bird_0
     21300002: bird_1
     21300004: bird_2
@@ -51,7 +52,7 @@ TextureImporter:
   spritePixelsToUnits: 16
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 5
   buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2

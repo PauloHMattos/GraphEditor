@@ -45,6 +45,7 @@ namespace Klak.Wiring.Patcher
                 return;
             }
 
+            EditorGUILayout.LabelField(NodeLink.SelectedLinkId.ToString());
             EditorGUILayout.LabelField(nodeLink.fromNode.displayName);
             EditorGUILayout.LabelField(nodeLink.fromOutlet.displayName);
             EditorGUILayout.LabelField(nodeLink.toNode.displayName);
@@ -82,7 +83,8 @@ namespace Klak.Wiring.Patcher
                 if (_propertyEditor == null)
                     _propertyEditor = activeNode.CreateEditor();
 
-                _propertyEditor.OnInspectorGUI();
+                if(_propertyEditor.target != null)
+                    _propertyEditor.OnInspectorGUI();
             }
         }
     }

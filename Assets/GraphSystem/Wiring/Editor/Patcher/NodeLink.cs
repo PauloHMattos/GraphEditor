@@ -30,6 +30,7 @@ namespace Klak.Wiring.Patcher
     public class NodeLink
     {
 
+        public static int SelectedLinkId;
         public static NodeLink SelectedLink;
 
         #region Public properties and methods

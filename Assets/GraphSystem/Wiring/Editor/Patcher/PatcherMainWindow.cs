@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using System.Reflection;
@@ -48,7 +49,7 @@ namespace Klak.Wiring.Patcher
                 Screen.height * height);
             
             GUI.DrawTextureWithTexCoords(
-                new Rect(0, 17, Screen.width, Screen.height),
+                new Rect(0, 0, Screen.width + 17, Screen.height),
                 GUIStyles.backgroundGrid,
                 uvDrawRect);
         }
@@ -141,11 +142,13 @@ namespace Klak.Wiring.Patcher
                     if(node.CachedLinks == null)
                         node.CacheLinks(_patch);
 
-                    foreach (var link in node.CachedLinks)
+                    for (int index = 0; index < node.CachedLinks.Count; index++)
                     {
-                        var pos = (e.mousePosition - new Vector2(0, 16 / _zoom) + _scrollPosition) / _zoom;
+                        var link = node.CachedLinks[index];
+                        var pos = (e.mousePosition - new Vector2(0, 16/_zoom) + _scrollPosition)/_zoom;
                         if (link.OnLine(pos))
                         {
+                            NodeLink.SelectedLinkId = index;
                             NodeLink.SelectedLink = link;
                             Node.ActiveNode = null;
                         }
@@ -263,13 +266,26 @@ namespace Klak.Wiring.Patcher
 
         public void ResetPosition()
         {
-            _scrollPosition = Vector2.zero;
             _mainViewMax = Vector2.zero;
-            var min = Vector2.one * float.MaxValue;
+            //var min = Vector2.one * float.MaxValue;
+            //var max = Vector2.zero;
+            //var maxHeight = 0f;
+            //foreach (var node in _patch.nodeList)
+            //{
+            //    min = Vector2.Min(min, node.windowPosition);
+            //    max = Vector2.Max(max, node.windowPosition);
+            //    maxHeight = Mathf.Max(maxHeight, node.LastRect.height);
+            //}
+            //var width = ((max - min).x + 200) - Screen.width;
+            //var height = ((max - min).y + maxHeight) - Screen.height;
+
             foreach (var node in _patch.nodeList)
             {
-                min = Vector2.Min(min, node.windowPosition);
+                _scrollPosition = node.windowPosition;
+                break;
+                //node.windowPosition += new Vector2(width / 2, height / 2);
             }
+            //_scrollPosition = Vector2.zero;
         }
 
         protected override void OnEnable()
@@ -280,8 +296,8 @@ namespace Klak.Wiring.Patcher
 
         void DrawMainViewGUI()
         {
-            DrawBackground();
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+            DrawBackground();
 
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -329,10 +345,10 @@ namespace Klak.Wiring.Patcher
             _mainViewMax.x += 200;
             mainViewMin.x -= 20;
             mainViewMin.y -= 20;
-            foreach (var node in _patch.nodeList)
-            {
-                node.windowPosition -= mainViewMin;
-            }
+            //foreach (var node in _patch.nodeList)
+            //{
+            //    node.windowPosition -= mainViewMin;
+            //}
             EndWindows();
 
             var x = Mathf.Max(_mainViewMax.x * _zoom, Screen.width - 18);
