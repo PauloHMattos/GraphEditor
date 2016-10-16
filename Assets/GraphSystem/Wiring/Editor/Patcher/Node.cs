@@ -398,6 +398,7 @@ namespace Klak.Wiring.Patcher
                 BindingFlags.NonPublic |
                 BindingFlags.Instance;
 
+
             _inlets.Clear();
             // Inlets (property)
             foreach (var prop in _instance.GetType().GetProperties(flags))
@@ -409,6 +410,7 @@ namespace Klak.Wiring.Patcher
                 _inlets.Add(new Inlet(prop.GetSetMethod().Name, name));
             }
 
+            Inlet manualTriggerInlet = null;
             // Inlets (method)
             foreach (var method in _instance.GetType().GetMethods(flags))
             {
@@ -416,13 +418,23 @@ namespace Klak.Wiring.Patcher
                 if (attrs.Length == 0) continue;
 
 
-                if (method.Name == "ManualTrigger" && _instance.ShowTriggerInlet == false)
+                if (method.Name == "ManualTrigger")
                 {
+                    if (_instance.ShowTriggerInlet == false)
+                    {
+                        continue;
+                    }
+                    manualTriggerInlet = new Inlet(method.Name, ((NameAttribute)attrs[0]).Name ?? method.Name);
                     continue;
                 }
                 var name = ((NameAttribute)attrs[0]).Name ?? method.Name;
                 _inlets.Add(new Inlet(method.Name, name));
             }
+            if (manualTriggerInlet != null)
+            {
+                _inlets.Add(manualTriggerInlet);
+            }
+
 
             _outlets.Clear();
             // Outlets (UnityEvent members)
