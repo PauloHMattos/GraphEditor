@@ -65,11 +65,11 @@ namespace Klak.Wiring
 
     // Attribute for marking outlets
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
-    public class NodeType : NameAttribute
+    public class NodeType : Attribute
     {
         public string[] Types { get; set; }
 
-        public NodeType(string name, params string[] types) : base(name)
+        public NodeType(params string[] types)
         {
             Types = types;
         }
