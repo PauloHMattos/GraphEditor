@@ -175,6 +175,9 @@ namespace Klak.Wiring
         public class VoidEvent : UnityEvent { }
 
         [Serializable]
+        public class BoolEvent : UnityEvent<bool> { }
+
+        [Serializable]
         public class ObjectEvent : UnityEvent<object> { }
 
         [Serializable]

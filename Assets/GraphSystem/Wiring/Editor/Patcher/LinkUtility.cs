@@ -61,6 +61,9 @@ namespace Klak.Wiring.Patcher
                         );
                     return true;
                 }
+
+                // TODO - Verificar a utilizade disso
+                // ------------------------------------------------------------------------
                 if (actionType == typeof(UnityAction<float>))
                 {
                     UnityEventTools.AddFloatPersistentListener(
@@ -68,13 +71,43 @@ namespace Klak.Wiring.Patcher
                         );
                     return true;
                 }
-                //if (actionType == typeof(UnityAction<object>))
-                //{
-                //    UnityEventTools.AddPersistentListener(
-                //        triggerEvent, (UnityAction<object>)targetAction, 
-                //        );
-                //    return true;
-                //}
+                if (actionType == typeof(UnityAction<bool>))
+                {
+                    UnityEventTools.AddBoolPersistentListener(
+                        triggerEvent, (UnityAction<bool>)targetAction, false
+                        );
+                    return true;
+                }
+                if (actionType == typeof(UnityAction<int>))
+                {
+                    UnityEventTools.AddIntPersistentListener(
+                        triggerEvent, (UnityAction<int>)targetAction, 0
+                        );
+                    return true;
+                }
+                if (actionType == typeof(UnityAction<string>))
+                {
+                    UnityEventTools.AddStringPersistentListener(
+                        triggerEvent, (UnityAction<string>)targetAction, ""
+                        );
+                    return true;
+                }
+                // ------------------------------------------------------------------------
+
+            }
+            else if (triggerEvent is UnityEvent<bool>)
+            {
+                // The trigger event has a float parameter.
+                // Then the target method should have a float parameter too.
+                if (actionType == typeof(UnityAction<bool>))
+                {
+                    // Add the action to the event.
+                    UnityEventTools.AddPersistentListener(
+                        (UnityEvent<bool>)triggerEvent,
+                        (UnityAction<bool>)targetAction
+                        );
+                    return true;
+                }
             }
             else if (triggerEvent is UnityEvent<float>)
             {
@@ -360,6 +393,7 @@ namespace Klak.Wiring.Patcher
             
             // Returns one of the corrensponding action types.
             if (paramType == typeof(void)) return typeof(UnityAction);
+            if (paramType == typeof (bool)) return typeof (UnityAction<bool>);
             if (paramType == typeof (float)) return typeof (UnityAction<float>);
             if (paramType == typeof (int)) return typeof (UnityAction<int>);
             if (paramType == typeof (string)) return typeof (UnityAction<string>);

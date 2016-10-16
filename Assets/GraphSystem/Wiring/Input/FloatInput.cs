@@ -13,8 +13,8 @@ namespace Klak.Wiring
         [SerializeField]
         float _value = 0.0f;
         
-        [SerializeField]
-        FloatInterpolator.Config _interpolator;
+        //[SerializeField]
+        //FloatInterpolator.Config _interpolator = new FloatInterpolator.Config();
 
         #endregion
 
@@ -24,29 +24,23 @@ namespace Klak.Wiring
         FloatEvent _valueEvent = new FloatEvent();
 
         #endregion
-
-
-        [Inlet]
-        public void Trigger()
-        {
-            _floatValue.targetValue = _value;
-            _valueEvent.Invoke(_floatValue.Step());
-        }
-
+        
         #region MonoBehaviour functions
 
-        FloatInterpolator _floatValue;
+        //FloatInterpolator _floatValue;
 
-        void Start()
-        {
-            _floatValue = new FloatInterpolator(0, _interpolator);
-        }
-
-        //void Update()
+        //protected override void Start()
         //{
-        //    _floatValue.targetValue = _value;
-        //    _valueEvent.Invoke(_floatValue.Step());
+        //    base.Start();
+        //    _floatValue = new FloatInterpolator(0, _interpolator);
         //}
+
+        protected override void InvokeEvents()
+        {
+            //_floatValue.targetValue = _value;
+            //_valueEvent.Invoke(_floatValue.Step());
+            _valueEvent.Invoke(_value);
+        }
 
         #endregion
     }
