@@ -49,14 +49,13 @@ namespace Klak.Wiring.Patcher
                 Screen.height * height);
             
             GUI.DrawTextureWithTexCoords(
-                new Rect(0, 17, Screen.width + 17, Screen.height),
+                new Rect(-offset.x, -offset.y, Screen.width + 17, Screen.height),
                 GUIStyles.backgroundGrid,
                 uvDrawRect);
         }
 
         protected override void DrawGUI()
         {
-            //DrawBackground();
             EventHandler();
 
             // Menu
@@ -296,8 +295,8 @@ namespace Klak.Wiring.Patcher
 
         void DrawMainViewGUI()
         {
-            DrawBackground();
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+            DrawBackground();
 
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
