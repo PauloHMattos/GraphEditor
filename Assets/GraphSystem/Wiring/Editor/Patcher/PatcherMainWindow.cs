@@ -49,7 +49,7 @@ namespace Klak.Wiring.Patcher
                 Screen.height * height);
             
             GUI.DrawTextureWithTexCoords(
-                new Rect(0, 0, Screen.width + 17, Screen.height),
+                new Rect(0, 17, Screen.width + 17, Screen.height),
                 GUIStyles.backgroundGrid,
                 uvDrawRect);
         }
