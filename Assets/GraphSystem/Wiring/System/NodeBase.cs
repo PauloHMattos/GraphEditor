@@ -35,14 +35,18 @@ namespace Klak.Wiring
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
     public class InletAttribute : Attribute
     {
-        public InletAttribute() { }
+        public InletAttribute()
+        {
+        }
     }
-    
+
     // Attribute for marking outlets
     [AttributeUsage(AttributeTargets.Field)]
     public class OutletAttribute : Attribute
     {
-        public OutletAttribute() { }
+        public OutletAttribute()
+        {
+        }
     }
 
     // Attribute for marking outlets
@@ -61,14 +65,16 @@ namespace Klak.Wiring
     {
         public string enumName;
 
-        public EnumFlagAttribute() { }
+        public EnumFlagAttribute()
+        {
+        }
 
         public EnumFlagAttribute(string name)
         {
             enumName = name;
         }
     }
-    
+
 
 
     // Base class of wiring node classes
@@ -78,17 +84,16 @@ namespace Klak.Wiring
         {
             get { return true; }
         }
+
         public virtual bool UseAutomaticTrigger
         {
             get { return true; }
         }
 
-        [HideInInspector]
-        public Vector2 wiringNodePosition = uninitializedNodePosition;
+        [HideInInspector] public Vector2 wiringNodePosition = uninitializedNodePosition;
 
         public bool isNodeActive = true;
-        [EnumFlag("Automatic Trigger")]
-        public TriggerType triggerMechanism = 0;
+        [EnumFlag("Automatic Trigger")] public TriggerType triggerMechanism = 0;
 
         [Inlet]
         public virtual void ManualTrigger()
@@ -100,7 +105,7 @@ namespace Klak.Wiring
         protected virtual void InvokeEvents()
         {
         }
-        
+
         protected virtual void Awake()
         {
             if (triggerMechanism == TriggerType.Awake && UseAutomaticTrigger)
@@ -172,67 +177,113 @@ namespace Klak.Wiring
         }
 
         [Serializable]
-        public class VoidEvent : UnityEvent { }
+        public class VoidEvent : UnityEvent
+        {
+        }
 
         [Serializable]
-        public class BoolEvent : UnityEvent<bool> { }
+        public class BoolEvent : UnityEvent<bool>
+        {
+        }
 
         [Serializable]
-        public class ObjectEvent : UnityEvent<object> { }
+        public class ObjectEvent : UnityEvent<object>
+        {
+        }
 
         [Serializable]
-        public class FloatEvent : UnityEvent<float> { }
+        public class FloatEvent : UnityEvent<float>
+        {
+        }
 
         [Serializable]
-        public class StringEvent : UnityEvent<string> { }
+        public class StringEvent : UnityEvent<string>
+        {
+        }
 
         [Serializable]
-        public class IntEvent : UnityEvent<int> { }
+        public class IntEvent : UnityEvent<int>
+        {
+        }
 
         [Serializable]
-        public class Vector3Event : UnityEvent<Vector3> {}
+        public class Vector3Event : UnityEvent<Vector3>
+        {
+        }
 
         [Serializable]
-        public class QuaternionEvent : UnityEvent<Quaternion> {}
+        public class QuaternionEvent : UnityEvent<Quaternion>
+        {
+        }
 
         [Serializable]
-        public class ColorEvent : UnityEvent<Color> { }
+        public class ColorEvent : UnityEvent<Color>
+        {
+        }
 
         [Serializable]
-        public class CollisionEvent : UnityEvent<Collision> { }
+        public class CollisionEvent : UnityEvent<Collision>
+        {
+        }
 
         [Serializable]
-        public class Collision2DEvent : UnityEvent<Collision2D> { }
+        public class Collision2DEvent : UnityEvent<Collision2D>
+        {
+        }
 
         [Serializable]
-        public class ColliderEvent : UnityEvent<Collider> { }
+        public class ColliderEvent : UnityEvent<Collider>
+        {
+        }
 
         [Serializable]
-        public class Collider2DEvent : UnityEvent<Collider2D> { }
+        public class Collider2DEvent : UnityEvent<Collider2D>
+        {
+        }
 
         [Serializable]
-        public class GameObjectEvent : UnityEvent<GameObject> { }
+        public class GameObjectEvent : UnityEvent<GameObject>
+        {
+        }
 
         [Serializable]
-        public class TransformEvent : UnityEvent<Transform> { }
+        public class TransformEvent : UnityEvent<Transform>
+        {
+        }
 
         [Serializable]
-        public class RigidbodyEvent : UnityEvent<Rigidbody> { }
+        public class RigidbodyEvent : UnityEvent<Rigidbody>
+        {
+        }
 
         [Serializable]
-        public class Rigidbody2DEvent : UnityEvent<Rigidbody2D> { }
+        public class Rigidbody2DEvent : UnityEvent<Rigidbody2D>
+        {
+        }
 
         [Serializable]
-        public class ContactPoint2DEvent : UnityEvent<ContactPoint2D> { }
+        public class ContactPoint2DEvent : UnityEvent<ContactPoint2D>
+        {
+        }
 
         [Serializable]
-        public class BoundsEvent : UnityEvent<Bounds> { }
+        public class BoundsEvent : UnityEvent<Bounds>
+        {
+        }
 
-        static public Vector2 uninitializedNodePosition {
+        static public Vector2 uninitializedNodePosition
+        {
             get { return new Vector2(-1000, -1000); }
         }
 
-        public virtual Color BackgroundNodeColor { get { return Color.white; } }
-        public virtual Color ContentColor { get { return Color.black; } }
+        public virtual Color BackgroundNodeColor
+        {
+            get { return Color.white; }
+        }
+
+        public virtual Color ContentColor
+        {
+            get { return Color.black; }
+        }
     }
 }

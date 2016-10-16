@@ -28,6 +28,11 @@ namespace Klak.Wiring
     [AddComponentMenu("Klak/Wiring/Convertion/Axis Rotation")]
     public class AxisRotation : NodeBase
     {
+        public override bool ShowTriggerInlet
+        {
+            get { return false; }
+        }
+
         #region Editable properties
 
         [SerializeField]

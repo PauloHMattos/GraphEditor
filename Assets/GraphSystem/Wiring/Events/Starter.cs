@@ -40,14 +40,17 @@ namespace Klak.Wiring
         #endregion
 
         #region MonoBehaviour functions
-
-        void Start()
+        
+        protected override void Awake()
         {
-            _onStartEvent.Invoke();
-        }
-        void Awake()
-        {
+            base.Awake();
             _onAwakeEvent.Invoke();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            _onStartEvent.Invoke();
         }
 
         #endregion

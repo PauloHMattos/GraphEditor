@@ -29,6 +29,10 @@ namespace Klak.Wiring
     [AddComponentMenu("Klak/Wiring/Convertion/Vector")]
     public class Vector : NodeBase
     {
+        public override bool ShowTriggerInlet
+        {
+            get { return false; }
+        }
         #region Editable properties
 
         [SerializeField]

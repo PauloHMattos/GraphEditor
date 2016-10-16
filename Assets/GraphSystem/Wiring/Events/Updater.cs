@@ -21,21 +21,24 @@ namespace Klak.Wiring
 
         #region MonoBehaviour functions
 
-        void Update()
+        protected override void Update()
         {
+            base.Update();
             if(isNodeActive)
                 _onUpdateEvent.Invoke();
         }
 
-        void LateUpdate()
+        protected override void LateUpdate()
         {
-            if(isNodeActive)
+            base.LateUpdate();
+            if (isNodeActive)
                 _onLateUpdateEvent.Invoke();
         }
 
-        void FixedUpdate()
+        protected override void FixedUpdate()
         {
-            if(isNodeActive)
+            base.FixedUpdate();
+            if (isNodeActive)
                 _onFixedUpdateEvent.Invoke();
         }
 

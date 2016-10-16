@@ -29,6 +29,12 @@ namespace Klak.Wiring
     [AddComponentMenu("Klak/Wiring/Filter/Float Filter")]
     public class FloatFilter : NodeBase
     {
+
+        public override bool ShowTriggerInlet
+        {
+            get { return false; }
+        }
+
         #region Editable properties
 
         [SerializeField]
@@ -80,13 +86,15 @@ namespace Klak.Wiring
 
         #region MonoBehaviour functions
 
-        void Start()
+        protected override void Start()
         {
+            base.Update();
             _floatValue = new FloatInterpolator(0, _interpolator);
         }
 
-        void Update()
+        protected override void Update()
         {
+            base.Update();
             if (_interpolator.enabled)
                 _outputEvent.Invoke(_floatValue.Step());
         }

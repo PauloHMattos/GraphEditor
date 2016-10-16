@@ -14,6 +14,11 @@ namespace Klak.Wiring
             get { return false; }
         }
 
+        public override bool UseAutomaticTrigger
+        {
+            get { return false; }
+        }
+
         protected override void Awake()
         {
             triggerMechanism = 0;

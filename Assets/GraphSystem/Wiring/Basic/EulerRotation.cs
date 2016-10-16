@@ -28,6 +28,11 @@ namespace Klak.Wiring
     [AddComponentMenu("Klak/Wiring/Convertion/Euler Rotation")]
     public class EulerRotation : NodeBase
     {
+        public override bool ShowTriggerInlet
+        {
+            get { return false; }
+        }
+
         #region Node I/O
 
         [Inlet]
