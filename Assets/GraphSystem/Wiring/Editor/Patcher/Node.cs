@@ -94,7 +94,9 @@ namespace Klak.Wiring.Patcher
         public Node(NodeBase instance)
         {
             _instance = instance;
-            _typeName = ObjectNames.NicifyVariableName(_instance.GetType().Name);
+
+            var attrs = instance.GetType().GetCustomAttributes(typeof(NameAttribute), true);
+            _typeName = attrs.Length == 0 ? ObjectNames.NicifyVariableName(_instance.GetType().Name) : ((NameAttribute)attrs[0]).Name;
             _windowID = _windowCounter++;
 
             // Inlets and outlets
@@ -403,7 +405,8 @@ namespace Klak.Wiring.Patcher
                 var attrs = prop.GetCustomAttributes(typeof(Wiring.InletAttribute), true);
                 if (attrs.Length == 0) continue;
 
-                _inlets.Add(new Inlet(prop.GetSetMethod().Name, prop.Name));
+                var name = ((NameAttribute)attrs[0]).Name ?? prop.Name;
+                _inlets.Add(new Inlet(prop.GetSetMethod().Name, name));
             }
 
             // Inlets (method)
@@ -417,7 +420,8 @@ namespace Klak.Wiring.Patcher
                 {
                     continue;
                 }
-                _inlets.Add(new Inlet(method.Name, method.Name));
+                var name = ((NameAttribute)attrs[0]).Name ?? method.Name;
+                _inlets.Add(new Inlet(method.Name, name));
             }
 
             _outlets.Clear();
@@ -428,8 +432,9 @@ namespace Klak.Wiring.Patcher
                 if (attrs.Length == 0) continue;
 
                 var evt = (UnityEventBase)field.GetValue(_instance);
-                
-                _outlets.Add(new Outlet(field.Name, evt));
+
+                var name = ((NameAttribute)attrs[0]).Name ?? field.Name;
+                _outlets.Add(new Outlet(name, evt));
             }
         }
 

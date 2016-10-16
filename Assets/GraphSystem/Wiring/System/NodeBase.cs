@@ -32,26 +32,44 @@ using System;
 namespace Klak.Wiring
 {
     // Attribute for marking inlets
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Class)]
+    public class NameAttribute : Attribute
+    {
+        public string Name { get; private set; }
+
+        public NameAttribute(string name)
+        {
+            Name = name;
+        }
+
+        protected NameAttribute()
+        {
+        }
+    }
+
+    // Attribute for marking inlets
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
-    public class InletAttribute : Attribute
+    public class InletAttribute : NameAttribute
     {
         public InletAttribute() { }
+        public InletAttribute(string name) : base(name) { }
     }
     
     // Attribute for marking outlets
     [AttributeUsage(AttributeTargets.Field)]
-    public class OutletAttribute : Attribute
+    public class OutletAttribute : NameAttribute
     {
         public OutletAttribute() { }
+        public OutletAttribute(string name) : base(name) { }
     }
 
     // Attribute for marking outlets
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
-    public class NodeType : Attribute
+    public class NodeType : NameAttribute
     {
         public string[] Types { get; set; }
 
-        public NodeType(params string[] types)
+        public NodeType(string name, params string[] types) : base(name)
         {
             Types = types;
         }
@@ -90,7 +108,7 @@ namespace Klak.Wiring
         [EnumFlag("Automatic Trigger")]
         public TriggerType triggerMechanism = 0;
 
-        [Inlet]
+        [Inlet("Trigger")]
         public virtual void ManualTrigger()
         {
             if (isNodeActive)

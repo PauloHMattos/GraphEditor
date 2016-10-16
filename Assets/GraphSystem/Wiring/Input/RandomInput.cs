@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Klak.Wiring
 {
+    [Name("Random Number Generator")]
     [AddComponentMenu("Klak/Wiring/Input/Random Input")]
     public class RandomInput : InputNode
     {
@@ -11,8 +12,7 @@ namespace Klak.Wiring
         [SerializeField] private float _max;
 
         public MathParser.RoundMethodTypes roundMethod;
-
-        [Inlet]
+        
         public int Seed
         {
             set
@@ -23,6 +23,7 @@ namespace Klak.Wiring
                 InitState();
             }
         }
+
         [Inlet]
         public float Min
         {
@@ -33,6 +34,7 @@ namespace Klak.Wiring
                 _min = value;
             }
         }
+
         [Inlet]
         public float Max
         {
@@ -44,9 +46,9 @@ namespace Klak.Wiring
             }
         }
 
-        [SerializeField, Outlet] private FloatEvent _floatValueEvent = new FloatEvent();
-        [SerializeField, Outlet] private FloatEvent _roundedFloatValueEvent = new FloatEvent();
-        [SerializeField, Outlet] private IntEvent _intValueEvent = new IntEvent();
+        [SerializeField, Outlet("Float")] private FloatEvent _floatValueEvent = new FloatEvent();
+        [SerializeField, Outlet("Rounded Float")] private FloatEvent _roundedFloatValueEvent = new FloatEvent();
+        [SerializeField, Outlet("Int")] private IntEvent _intValueEvent = new IntEvent();
 
         protected override void Start()
         {
